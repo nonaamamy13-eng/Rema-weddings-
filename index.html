@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>دعوة زفاف ريمى وعبد العزيز</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-paper: #f7f1e8;
+      --card-cream: #fdfaf5;
+      --arch-bg: #efe3d2;
+      --gold: #c49a45;
+      --gold-bright: #f4cb68;
+      --ink: #2a211b;
+      --ink-soft: #756355;
+      --rose: #b86b77;
+      --sage: #6f8f72;
+      --shadow-soft: 0 18px 45px rgba(42, 33, 27, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: radial-gradient(circle at top, #fbf7f0 0%, #efe5d6 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px 14px 56px;
+    }
+
+    .invite-card {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      background: var(--card-cream);
+      border-radius: 28px;
+      padding: 28px 20px 36px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(196, 154, 69, 0.28);
+      overflow: hidden;
+    }
+
+    /* زخرفة نباتية وزهرية ناعمة في الزوايا على غرار الفيديو */
+    .floral-corner {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      pointer-events: none;
+      opacity: 0.78;
+      z-index: 1;
+    }
+
+    .floral-top-right {
+      top: -12px;
+      right: -12px;
+    }
+
+    .floral-top-left {
+      top: -12px;
+      left: -12px;
+      transform: scaleX(-1);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .top-sub {
+      text-align: center;
+      font-size: 0.78rem;
+      letter-spacing: 1.5px;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+
+    .couple-title {
+      text-align: center;
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 7.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 18px;
+    }
+
+    .couple-title .amp {
+      color: var(--gold);
+      margin: 0 8px;
+      font-style: italic;
+    }
+
+    /* مشهد الأقواس والشموع الثلاث */
+    .candles-stage {
+      position: relative;
+      background: linear-gradient(180deg, rgba(247, 239, 227, 0.75) 0%, rgba(253, 250, 245, 0.95) 100%);
+      border: 1px solid rgba(196, 154, 69, 0.22);
+      border-radius: 22px;
+      padding: 22px 10px 26px;
+      margin-bottom: 18px;
+      touch-action: none;
+    }
+
+    .arches-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      align-items: end;
+      position: relative;
+      min-height: 255px;
+    }
+
+    .candle-slot {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 255px;
+      border-radius: 999px 999px 16px 16px;
+      background: var(--arch-bg);
+      padding: 16px 6px 14px;
+      transition: box-shadow 0.45s ease, background 0.45s ease;
+      overflow: hidden;
+    }
+
+    .candle-slot.lit-glow {
+      background: radial-gradient(circle at 50% 35%, rgba(255, 226, 148, 0.75), var(--arch-bg) 75%);
+      box-shadow: 0 0 28px rgba(244, 203, 104, 0.45);
+    }
+
+    .slot-label {
+      position: relative;
+      z-index: 3;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--ink-soft);
+      margin-bottom: auto;
+      padding-top: 6px;
+    }
+
+    .revealed-piece {
+      position: relative;
+      z-index: 3;
+      font-family: 'Amiri', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--ink);
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(8px) scale(0.9);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      margin-bottom: 6px;
+    }
+
+    .candle-slot.lit-glow .revealed-piece {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .flame-box {
+      position: relative;
+      z-index: 4;
+      width: 22px;
+      height: 34px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-bottom: 2px;
+    }
+
+    .flame {
+      width: 16px;
+      height: 28px;
+      border-radius: 50% 50% 25% 25% / 65% 65% 35% 35%;
+      background: radial-gradient(circle at 50% 75%, #fffbe0 15%, #ffbe2e 55%, #ff6200 100%);
+      box-shadow: 0 0 16px #ffae00, 0 0 32px rgba(255, 145, 0, 0.8);
+      opacity: 0;
+      transform: scale(0.2);
+      transform-origin: bottom center;
+      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .flame.is-lit {
+      opacity: 1;
+      transform: scale(1);
+      animation: candleFlicker 1.2s infinite alternate ease-in-out;
+    }
+
+    @keyframes candleFlicker {
+      0% { transform: scale(0.95) rotate(-2deg); }
+      50% { transform: scale(1.06) rotate(2.5deg); }
+      100% { transform: scale(0.97) rotate(-1.5deg); }
+    }
+
+    .wick {
+      position: relative;
+      z-index: 3;
+      width: 2.5px;
+      height: 8px;
+      background: #2c221c;
+      border-radius: 2px;
+    }
+
+    .wax-body {
+      position: relative;
+      z-index: 3;
+      width: 38px;
+      height: 92px;
+      border-radius: 8px 8px 5px 5px;
+      background: linear-gradient(90deg, #e5d4ba 0%, #fffaf0 48%, #d2bc9b 100%);
+      box-shadow: inset 0 -8px 14px rgba(135, 98, 52, 0.2), 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    .brass-stand {
+      position: relative;
+      z-index: 3;
+      width: 60px;
+      height: 11px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #9d762b, #f0d38d, #a57c30);
+      margin-top: -1px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+    }
+
+    /* علبة الكبريت وعود الثقاب التفاعلي */
+    .match-area {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px dashed rgba(196, 154, 69, 0.45);
+    }
+
+    .match-instruction {
+      font-size: 0.85rem;
+      color: var(--ink);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .match-instruction span {
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 400;
+      color: var(--ink-soft);
+      margin-top: 2px;
+    }
+
+    .matchbox-visual {
+      width: 78px;
+      height: 52px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f6efe4, #e7dac6);
+      border: 1px solid rgba(196, 154, 69, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    .matchbox-striker {
+      width: 62px;
+      height: 8px;
+      border-radius: 4px;
+      background: repeating-linear-gradient(45deg, #b88a44, #b88a44 3px, #d4ac6a 3px, #d4ac6a 6px);
+      margin-bottom: 4px;
+    }
+
+    .matchbox-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    /* عود الثقاب القابل للسحب في أي مكان على الشاشة */
+    #draggable-match {
+      position: fixed;
+      right: 26px;
+      bottom: 24px;
+      z-index: 80;
+      width: 44px;
+      height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      transform: rotate(-25deg);
+      transition: transform 0.2s ease;
+    }
+
+    #draggable-match:active {
+      cursor: grabbing;
+    }
+
+    .match-spark {
+      width: 14px;
+      height: 22px;
+      border-radius: 50% 50% 25% 25% / 65% 65% 35% 35%;
+      background: radial-gradient(circle at 50% 75%, #ffffff 10%, #ffd257 55%, #ff5a00 100%);
+      box-shadow: 0 0 14px #ff9d00, 0 0 26px rgba(255, 125, 0, 0.85);
+      opacity: 0;
+      transform: scale(0.2);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .match-spark.lit {
+      opacity: 1;
+      transform: scale(1);
+      animation: candleFlicker 0.85s infinite alternate ease-in-out;
+    }
+
+    .match-tip {
+      width: 11px;
+      height: 14px;
+      border-radius: 55% 55% 45% 45%;
+      background: radial-gradient(circle at 35% 30%, #d9483b, #731810);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    }
+
+    .match-wood {
+      width: 5px;
+      height: 64px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #c89b62, #f0cca0, #ae7f46);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .btn-calendar,
+    .btn-reveal-all {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn-calendar {
+      background: linear-gradient(135deg, var(--gold), #a97e2c);
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(169, 126, 44, 0.25);
+    }
+
+    .btn-reveal-all {
+      background: #efe5d5;
+      color: var(--ink);
+      border: 1px solid rgba(196, 154, 69, 0.4);
+    }
+
+    .btn-calendar:hover,
+    .btn-reveal-all:hover {
+      transform: translateY(-1px);
+    }
+
+    /* تفاصيل الدعوة الكاملة ونموذج RSVP */
+    .details-panel {
+      background: #faf5ec;
+      border: 1px solid rgba(196, 154, 69, 0.28);
+      border-radius: 20px;
+      padding: 22px 18px;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .full-date-banner {
+      font-family: 'Amiri', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .venue-line {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .blessing-text {
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: var(--ink-soft);
+    }
+
+    .rsvp-box {
+      background: #ffffff;
+      border: 1px solid rgba(196, 154, 69, 0.25);
+      border-radius: 20px;
+      padding: 20px 18px;
+    }
+
+    .rsvp-box h2 {
+      font-family: 'Amiri', serif;
+      font-size: 1.55rem;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .rsvp-sub {
+      text-align: center;
+      font-size: 0.84rem;
+      color: var(--ink-soft);
+      margin-bottom: 16px;
+    }
+
+    .field {
+      margin-bottom: 13px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border-radius: 12px;
+      border: 1px solid #dfd0b8;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.92rem;
+      color: var(--ink);
+      background: #fdfbf7;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .whatsapp-send-btn {
+      width: 100%;
+      padding: 13px 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #1fa855, #128c7e);
+      color: #ffffff;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(18, 140, 126, 0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <article class="invite-card">
+      <!-- زخارف نباتية وزهرية في الأعلى -->
+      <svg class="floral-corner floral-top-right" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+        <path d="M148 14C115 18 86 38 70 72" stroke="#6f8f72" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M128 12C102 24 84 48 76 80" stroke="#85a387" stroke-width="1.8" stroke-linecap="round"/>
+        <ellipse cx="118" cy="24" rx="14" ry="7" transform="rotate(-22 118 24)" fill="#8aa88c"/>
+        <ellipse cx="96" cy="40" rx="15" ry="7.5" transform="rotate(-35 96 40)" fill="#6f8f72"/>
+        <ellipse cx="136" cy="46" rx="13" ry="6.5" transform="rotate(18 136 46)" fill="#96b398"/>
+        <circle cx="106" cy="64" r="14" fill="#e89ca8"/>
+        <circle cx="106" cy="64" r="7" fill="#f7c8d0"/>
+        <circle cx="132" cy="78" r="11" fill="#f2b8c2"/>
+        <circle cx="132" cy="78" r="5" fill="#fff0f3"/>
+      </svg>
+
+      <svg class="floral-corner floral-top-left" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+        <path d="M148 14C115 18 86 38 70 72" stroke="#6f8f72" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M128 12C102 24 84 48 76 80" stroke="#85a387" stroke-width="1.8" stroke-linecap="round"/>
+        <ellipse cx="118" cy="24" rx="14" ry="7" transform="rotate(-22 118 24)" fill="#8aa88c"/>
+        <ellipse cx="96" cy="40" rx="15" ry="7.5" transform="rotate(-35 96 40)" fill="#6f8f72"/>
+        <ellipse cx="136" cy="46" rx="13" ry="6.5" transform="rotate(18 136 46)" fill="#96b398"/>
+        <circle cx="106" cy="64" r="14" fill="#e89ca8"/>
+        <circle cx="106" cy="64" r="7" fill="#f7c8d0"/>
+        <circle cx="132" cy="78" r="11" fill="#f2b8c2"/>
+        <circle cx="132" cy="78" r="5" fill="#fff0f3"/>
+      </svg>
+
+      <div class="card-content">
+        <p class="top-sub">مع عائلتيهما الكريمتين</p>
+        <h1 class="couple-title">ريمى <span class="amp">&amp;</span> عبد العزيز</h1>
+
+        <!-- مشهد الشموع الثلاث التفاعلية -->
+        <section class="candles-stage" aria-label="إشعال الشموع الثلاث">
+          <div class="arches-row">
+            <!-- الشمعة 1: اليوم -->
+            <div class="candle-slot" id="slot-day">
+              <div class="slot-label">اليوم</div>
+              <div class="revealed-piece">23</div>
+              <div class="flame-box"><div class="flame" id="flame-day"></div></div>
+              <div class="wick"></div>
+              <div class="wax-body"></div>
+              <div class="brass-stand"></div>
+            </div>
+
+            <!-- الشمعة 2: الشهر -->
+            <div class="candle-slot" id="slot-month">
+              <div class="slot-label">الشهر</div>
+              <div class="revealed-piece">مارس</div>
+              <div class="flame-box"><div class="flame" id="flame-month"></div></div>
+              <div class="wick"></div>
+              <div class="wax-body"></div>
+              <div class="brass-stand"></div>
+            </div>
+
+            <!-- الشمعة 3: السنة -->
+            <div class="candle-slot" id="slot-year">
+              <div class="slot-label">السنة</div>
+              <div class="revealed-piece">2027</div>
+              <div class="flame-box"><div class="flame" id="flame-year"></div></div>
+              <div class="wick"></div>
+              <div class="wax-body"></div>
+              <div class="brass-stand"></div>
+            </div>
+          </div>
+
+          <div class="match-area">
+            <div class="match-instruction" id="status-instruction">
+              اسحب عود الثقاب ومرّره على فتيل الشموع الثلاث (0 / 3)
+              <span>تظهر تفاصيل اليوم والشهر والسنة مع إشعال كل شمعة</span>
+            </div>
+            <div class="matchbox-visual">
+              <div class="matchbox-striker"></div>
+              <div class="matchbox-label">MATCHES</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="action-bar">
+          <button type="button" class="btn-calendar" id="add-calendar-btn">إضافة إلى التقويم</button>
+          <button type="button" class="btn-reveal-all" id="light-all-btn">إشعال جميع الشموع</button>
+        </div>
+
+        <section class="details-panel" id="invitation-details">
+          <div class="full-date-banner">23 مارس 2027</div>
+          <div class="venue-line">قاعة الملاك</div>
+          <p class="blessing-text">
+            يسعدنا حضوركم ومشاركتنا فرحة زفاف <strong>ريمى وعبد العزيز</strong> في ليلة عامرة بالمودة والبهجة.
+          </p>
+        </section>
+
+        <section class="rsvp-box" aria-label="تأكيد الحضور عبر واتساب">
+          <h2>تأكيد الحضور (RSVP)</h2>
+          <p class="rsvp-sub">سيتم إرسال تأكيد الحضور مباشرة إلى رقم الواتساب المحدد</p>
+
+          <form id="rsvp-form">
+            <div class="field">
+              <label for="guest-name">الاسم الكامل</label>
+              <input type="text" id="guest-name" placeholder="اكتب اسمك الكريم" required />
+            </div>
+
+            <div class="field">
+              <label for="guest-status">تأكيد الحضور</label>
+              <select id="guest-status" required>
+                <option value="سأحضر بإذن الله">سأحضر بإذن الله</option>
+                <option value="أعتذر عن الحضور">أعتذر عن الحضور</option>
+                <option value="بانتظار التأكيد">بانتظار التأكيد</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="guest-count">عدد الضيوف</label>
+              <input type="number" id="guest-count" min="1" max="20" value="1" required />
+            </div>
+
+            <div class="field">
+              <label for="guest-note">رسالة تهنئة (اختياري)</label>
+              <textarea id="guest-note" rows="2" placeholder="أجمل التهاني للعروسين..."></textarea>
+            </div>
+
+            <button type="submit" class="whatsapp-send-btn">إرسال عبر واتساب</button>
+          </form>
+        </section>
+      </div>
+    </article>
+  </div>
+
+  <!-- عود الثقاب القابل للسحب -->
+  <div id="draggable-match" title="اسحب عود الثقاب لإشعال الشموع">
+    <div class="match-spark" id="match-spark"></div>
+    <div class="match-tip"></div>
+    <div class="match-wood"></div>
+  </div>
+
+  <script>
+    (function () {
+      const WHATSAPP_NUMBER = "218927764249";
+
+      const matchEl = document.getElementById("draggable-match");
+      const sparkEl = document.getElementById("match-spark");
+      const instructionEl = document.getElementById("status-instruction");
+      const lightAllBtn = document.getElementById("light-all-btn");
+      const calendarBtn = document.getElementById("add-calendar-btn");
+      const rsvpForm = document.getElementById("rsvp-form");
+
+      const candles = [
+        { id: "day", slot: document.getElementById("slot-day"), flame: document.getElementById("flame-day"), lit: false },
+        { id: "month", slot: document.getElementById("slot-month"), flame: document.getElementById("flame-month"), lit: false },
+        { id: "year", slot: document.getElementById("slot-year"), flame: document.getElementById("flame-year"), lit: false }
+      ];
+
+      let dragging = false;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      function refreshStatusText() {
+        const count = candles.filter((c) => c.lit).length;
+        if (count === 3) {
+          instructionEl.innerHTML =
+            'تم إشعال الشموع الثلاث! 23 مارس 2027 — قاعة الملاك<span>يمكنك الآن تأكيد حضورك أدناه أو إضافة الموعد إلى التقويم</span>';
+        } else {
+          instructionEl.innerHTML =
+            `اسحب عود الثقاب ومرّره على فتيل الشموع الثلاث (${count} / 3)<span>تظهر تفاصيل اليوم والشهر والسنة مع إشعال كل شمعة</span>`;
+        }
+      }
+
+      function lightCandle(candle) {
+        if (candle.lit) return;
+        candle.lit = true;
+        candle.flame.classList.add("is-lit");
+        candle.slot.classList.add("lit-glow");
+        refreshStatusText();
+      }
+
+      function checkFlameProximity(pointerX, pointerY) {
+        candles.forEach((candle) => {
+          if (candle.lit) return;
+          const rect = candle.flame.getBoundingClientRect();
+          const pad = 34;
+          const hitX = pointerX >= rect.left - pad && pointerX <= rect.right + pad;
+          const hitY = pointerY >= rect.top - pad && pointerY <= rect.bottom + pad;
+          if (hitX && hitY) {
+            lightCandle(candle);
+          }
+        });
+      }
+
+      function onPointerDown(e) {
+        e.preventDefault();
+        dragging = true;
+        matchEl.setPointerCapture(e.pointerId);
+        sparkEl.classList.add("lit");
+        const rect = matchEl.getBoundingClientRect();
+        offsetX = e.clientX - (rect.left + rect.width / 2);
+        offsetY = e.clientY - (rect.top + rect.height / 2);
+        matchEl.style.transition = "none";
+      }
+
+      function onPointerMove(e) {
+        if (!dragging) return;
+        const x = e.clientX - offsetX;
+        const y = e.clientY - offsetY;
+        matchEl.style.left = `${x}px`;
+        matchEl.style.top = `${y}px`;
+        matchEl.style.right = "auto";
+        matchEl.style.bottom = "auto";
+        matchEl.style.transform = "translate(-50%, -50%) rotate(-12deg)";
+        checkFlameProximity(e.clientX, e.clientY);
+      }
+
+      function onPointerUp() {
+        if (!dragging) return;
+        dragging = false;
+        sparkEl.classList.remove("lit");
+        matchEl.style.transition = "transform 0.25s ease";
+        matchEl.style.transform = "translate(-50%, -50%) rotate(-25deg)";
+      }
+
+      matchEl.addEventListener("pointerdown", onPointerDown);
+      matchEl.addEventListener("pointermove", onPointerMove);
+      matchEl.addEventListener("pointerup", onPointerUp);
+      matchEl.addEventListener("pointercancel", onPointerUp);
+
+      lightAllBtn.addEventListener("click", function () {
+        candles.forEach((c) => lightCandle(c));
+      });
+
+      calendarBtn.addEventListener("click", function () {
+        const icsContent = [
+          "BEGIN:VCALENDAR",
+          "VERSION:2.0",
+          "PRODID:-//Wedding Invitation//Remy & Abdulaziz//AR",
+          "BEGIN:VEVENT",
+          "DTSTART:20270323T180000Z",
+          "DTEND:20270323T220000Z",
+          "SUMMARY:حفل زفاف ريمى وعبد العزيز",
+          "LOCATION:قاعة الملاك",
+          "DESCRIPTION:دعوة لحضور حفل زفاف ريمى وعبد العزيز بتاريخ 23/3/2027 في قاعة الملاك",
+          "END:VEVENT",
+          "END:VCALENDAR"
+        ].join("\r\n");
+
+        const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "wedding-remy-abdulaziz-2027-03-23.ics";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      });
+
+      rsvpForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = document.getElementById("guest-name").value.trim();
+        const status = document.getElementById("guest-status").value;
+        const count = document.getElementById("guest-count").value;
+        const note = document.getElementById("guest-note").value.trim();
+
+        const lines = [
+          "مرحباً، تأكيد حضور لحفل زفاف *ريمى وعبد العزيز*:",
+          `• الاسم: ${name}`,
+          `• الحالة: ${status}`,
+          `• عدد الضيوف: ${count}`,
+          "• التاريخ: 23/3/2027",
+          "• المكان: قاعة الملاك"
+        ];
+        if (note) {
+          lines.push(`• تهنئة: ${note}`);
+        }
+
+        const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+        window.open(waUrl, "_blank", "noopener,noreferrer");
+      });
+    })();
+  </script>
+</body>
+</html>
